@@ -8,15 +8,22 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://todo-client.onrender.com',
+  /^https:\/\/todo-client-.*\.onrender\.com$/,
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: allowedOrigins,
   credentials: true
 }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 // Database setup
-const dbPath = path.join(__dirname, 'todos.db');
+const dbPath = process.env.DATABASE_PATH || path.join(__dirname, 'todos.db');
 const db = new sqlite3.Database(dbPath);
 
 // Create tables if they don't exist

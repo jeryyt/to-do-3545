@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: todo-api
+    env: node
+    buildCommand: cd server && npm install && npm rebuild sqlite3
+    startCommand: cd server && npm start
+    healthCheckPath: /api/health
+
+  - type: web
+    name: todo-client
+    env: node  
+    buildCommand: cd client && npm install && npm run build
+    startCommand: cd client && npx serve -s build -p $PORT
