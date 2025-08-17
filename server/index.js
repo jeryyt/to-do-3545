@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   'http://localhost:3000',
   'https://todo-client.onrender.com',
+  /^https:\/\/todo-client-.*\.onrender\.com$/,
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
